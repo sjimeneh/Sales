@@ -1,2 +1,2 @@
 # Sales
-Desarrollo de Actividades con C#, Blazor, MAUI and API.
+Desarrollo de Actividades en clase con ZULU con C#, Blazor, MAUI and API.
