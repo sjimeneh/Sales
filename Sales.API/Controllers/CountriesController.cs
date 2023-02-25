@@ -54,12 +54,21 @@ namespace Sales.API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteAsync(int id)
         {
-            var afectedRow = await _context.Countries.Where(x=>x.Id==id).ExecuteDeleteAsync();
-            if(afectedRow == 0)
+            var country = await _context.Countries.FirstOrDefaultAsync(x=>x.Id == id);
+            if(country is null)
             {
                 return NotFound();
             }
+            _context.Countries.Remove(country);
+            await _context.SaveChangesAsync();
             return NoContent();
+
+            //var afectedRow = await _context.Countries.Where(x => x.Id == id).ExecuteDeleteAsync();
+            //if (afectedRow == 0)
+            //{
+            //    return NotFound();
+            //}
+            //return NoContent();
         }
     }
 }
