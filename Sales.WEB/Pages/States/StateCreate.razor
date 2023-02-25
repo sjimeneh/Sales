@@ -1,18 +1,18 @@
-﻿@page "/countries/create"
+﻿@page "/state/create"
 @inject IRepository repository;
 @inject NavigationManager navigationManager;
 @inject SweetAlertService sweetAlertService; 
-<h3>Crear País</h3>
+<h3>Crear Estado</h3>
 
-<CountryForm @ref="countryForm" Country="country" OnValidSubmit="Create" ReturnAction="Return"></CountryForm>
+<StateForm @ref="stateForm" state="state" OnValidSubmit="Create" ReturnAction="Return"></StateForm>
 @code {
-    private Country country = new();
-    private CountryForm? countryForm;
+    private State state = new();
+    private StateForm? stateForm;
 
 
     private async Task Create()
     {
-        var httpResponse = await repository.Post("/api/countries",country);
+        var httpResponse = await repository.Post("/api/states", state);
         if (httpResponse.Error)
         {
             var message = await httpResponse.GetErrorMessageAsync();
@@ -24,9 +24,7 @@
 
     private void Return()
     {
-        countryForm!.FormPostedSuccesfully = true;
-        navigationManager.NavigateTo("/countries");
+        stateForm!.FormPostedSuccesfully = true;
+        navigationManager.NavigateTo("/states");
     }
 }
-
-
