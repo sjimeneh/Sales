@@ -1,45 +1,45 @@
-﻿@page "/states/edit/{Id:int}"
+﻿@page "/categories/edit/{Id:int}"
 @inject IRepository repository
 @inject NavigationManager navigationManager
 @inject SweetAlertService sweetAlertService
 
-<h3>Editar Estado</h3>
+<h3>Editar Categoría</h3>
 
-@if (state is null)
+@if (category is null)
 {
     <p>Cargando...</p>
 }
 else
 {
-    <StateForm @ref="stateForm" state="state" OnValidSubmit="EditAsync" ReturnAction="Return"></StateForm>
+    <CategoryForm @ref="categoryForm" category="category" OnValidSubmit="EditAsync" ReturnAction="Return"></CategoryForm>
 }
 
 @code {
-    private StateForm? stateForm;
-    private State? state;
+    private CategoryForm? categoryForm;
+    private Category? category;
     [Parameter]
     public int Id { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        var responseHttp = await repository.Get<State>($"/api/states/{Id}");
+        var responseHttp = await repository.Get<Category>($"/api/categories/{Id}");
         if (responseHttp.Error)
         {
             if (responseHttp.HttpResponseMessage.StatusCode == HttpStatusCode.NotFound)
             {
-                navigationManager.NavigateTo("/states");
+                navigationManager.NavigateTo("/categories");
                 return;
             }
             var message = await responseHttp.GetErrorMessageAsync();
             await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
             return;
         }
-        state = responseHttp.Response;
+        category = responseHttp.Response;
 
     }
     private async Task EditAsync()
     {
-        var responseHttp = await repository.Put("/api/states", state);
+        var responseHttp = await repository.Put("/api/categories", category);
         if (responseHttp.Error)
         {
             var message = await responseHttp.GetErrorMessageAsync();
@@ -51,8 +51,8 @@ else
 
     private void Return()
     {
-        stateForm!.FormPostedSuccesfully = true;
-        navigationManager.NavigateTo("/states");
+        categoryForm!.FormPostedSuccesfully = true;
+        navigationManager.NavigateTo("/categories");
     }
 
 }

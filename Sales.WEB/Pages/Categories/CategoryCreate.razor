@@ -1,18 +1,19 @@
-﻿@page "/state/create"
+﻿@page "/category/create"
 @inject IRepository repository;
 @inject NavigationManager navigationManager;
 @inject SweetAlertService sweetAlertService; 
-<h3>Crear Estado</h3>
 
-<StateForm @ref="stateForm" state="state" OnValidSubmit="Create" ReturnAction="Return"></StateForm>
+<h3>Crear Categoría</h3>
+
+<CategoryForm @ref="categoryForm" category="category" OnValidSubmit="Create" ReturnAction="Return"></CategoryForm>
 @code {
-    private State state = new();
-    private StateForm? stateForm;
+    private Category category = new();
+    private CategoryForm? categoryForm;
 
 
     private async Task Create()
     {
-        var httpResponse = await repository.Post("/api/states", state);
+        var httpResponse = await repository.Post("/api/categories", category);
         if (httpResponse.Error)
         {
             var message = await httpResponse.GetErrorMessageAsync();
@@ -24,7 +25,7 @@
 
     private void Return()
     {
-        stateForm!.FormPostedSuccesfully = true;
-        navigationManager.NavigateTo("/states");
+        categoryForm!.FormPostedSuccesfully = true;
+        navigationManager.NavigateTo("/categories");
     }
 }

@@ -7,11 +7,11 @@
 
     <DataAnnotationsValidator />
     <div class="mb-3">
-        <label>Estado</label>
+        <label>Categoría</label>
         <div>
 
-            <InputText class="form-control" @bind-Value="@state.Name" />
-            <ValidationMessage For="@(()=> state.Name)" />
+            <InputText class="form-control" @bind-Value="@category.Name" />
+            <ValidationMessage For="@(()=> category.Name)" />
         </div>
     </div>
 
@@ -24,7 +24,7 @@
 
     [Parameter]
     [EditorRequired]
-    public State state { get; set; } = null!;
+    public Category category { get; set; } = null!;
 
     //Acciones que van a pasara cuando se ejecute un boton
     [Parameter]
@@ -39,7 +39,7 @@
 
     protected override void OnInitialized()
     {
-        editContext = new(state);
+        editContext = new(category);
     }
 
     private async Task OnBeforeInternalNavigation(LocationChangingContext context)
