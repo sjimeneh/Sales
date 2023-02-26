@@ -7,7 +7,7 @@ namespace Sales.API.Controllers
 {
     [ApiController]
     [Route("/api/countries")]
-    public class CountriesController:ControllerBase
+    public class CountriesController : ControllerBase
     {
         private readonly DataContext _context;
 
@@ -24,16 +24,32 @@ namespace Sales.API.Controllers
         [HttpPost]
         public async Task<ActionResult> PostAsync(Country country)
         {
-            _context.Countries.Add(country);
-            await _context.SaveChangesAsync();
-            return Ok(country);
+            try
+            {
+                _context.Countries.Add(country);
+                await _context.SaveChangesAsync();
+                return Ok(country);
+            }
+            catch (DbUpdateException UpdateException)
+            {
+
+                if (UpdateException.InnerException!.Message.Contains("duplicate"))
+                {
+                    return BadRequest("Ya existe un pais con el mismo Nombre");
+                }
+                return BadRequest(UpdateException.Message);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpGet("{id:int}")]
         public async Task<ActionResult> GetAsync(int id)
         {
-            var country = await _context.Countries.FirstOrDefaultAsync(x=>x.Id==id);
-            if(country is null)
+            var country = await _context.Countries.FirstOrDefaultAsync(x => x.Id == id);
+            if (country is null)
             {
                 return NotFound();
             }
@@ -54,8 +70,8 @@ namespace Sales.API.Controllers
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteAsync(int id)
         {
-            var country = await _context.Countries.FirstOrDefaultAsync(x=>x.Id == id);
-            if(country is null)
+            var country = await _context.Countries.FirstOrDefaultAsync(x => x.Id == id);
+            if (country is null)
             {
                 return NotFound();
             }
