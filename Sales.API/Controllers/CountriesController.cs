@@ -15,11 +15,19 @@ namespace Sales.API.Controllers
         {
             _context = context;
         }
+        [HttpGet("full")]
+        public async Task<ActionResult> GetFullAsync()
+        {
+            return Ok(await _context.Countries
+                .Include(x => x.States!)
+                .ThenInclude(x=>x.Cities)
+                .ToListAsync());
+        }
 
         [HttpGet]
         public async Task<ActionResult> GetAsync()
         {
-            return Ok(await _context.Countries.ToListAsync());
+            return Ok(await _context.Countries.Include(x => x.States).ToListAsync());
         }
         [HttpPost]
         public async Task<ActionResult> PostAsync(Country country)

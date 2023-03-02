@@ -10,6 +10,7 @@ namespace Sales.Shared.Entities
         [Display(Name = "Estado/Departamento")]
         public string Name { get; set; } = null!;
 
+        public int CountryId { get; set; }
         public Country? Country { get; set; }
 
         public ICollection<City>? Cities { get; set; }
