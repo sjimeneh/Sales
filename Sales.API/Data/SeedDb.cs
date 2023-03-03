@@ -27,7 +27,13 @@ namespace Sales.API.Data
                 _context.Categories.Add(new Category { Name = "Hogar" });
                 _context.Categories.Add(new Category { Name = "Moda" });
                 _context.Categories.Add(new Category { Name = "Tecnología" });
+                _context.Categories.Add(new Category { Name = "Calzado" });
+                _context.Categories.Add(new Category { Name = "Deporte" });
+                _context.Categories.Add(new Category { Name = "Juguetería" });
+                _context.Categories.Add(new Category { Name = "Cocina" });
+                _context.Categories.Add(new Category { Name = "Video Juegos" });
                 _context.Categories.Add(new Category { Name = "Entretenimiento" });
+                
                 await _context.SaveChangesAsync();
             }
         }
