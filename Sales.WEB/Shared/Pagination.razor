@@ -14,12 +14,13 @@
 @code {
     [Parameter] public int CurrentPage { get; set; } = 1;
     [Parameter] public int TotalPages { get; set; }
-    [Parameter] public int Radio { get; set; } = 5;
+    [Parameter] public int Radio { get; set; } = 9;
     [Parameter] public EventCallback<int> SelectedPage { get; set; }
     List<PageModel> Links = new();
 
     protected override void OnParametersSet()
     {
+        
         Links = new List<PageModel>();
 
         var previousLinkEnable = CurrentPage != 1;
@@ -33,7 +34,7 @@
 
         for (int i = 1; i <= TotalPages; i++)
         {
-            if (i >= CurrentPage - Radio && i <= CurrentPage + Radio)
+            if (i >= CurrentPage - Radio && Links.Count-1<=Radio)
             {
                 Links.Add(new PageModel
                     {
@@ -43,6 +44,8 @@
                     });
             }
         }
+
+
 
         var linkNextEnable = CurrentPage != TotalPages;
         var linkNextPage = CurrentPage + 1;
@@ -57,7 +60,7 @@
 
     private async Task InternalSelectedPage(PageModel pageModel)
     {
-        if (pageModel.Page == CurrentPage || pageModel.Page == 0)
+        if (pageModel.Page == CurrentPage || pageModel.Page == 0 || pageModel.Page > TotalPages)
         {
             return;
         }
