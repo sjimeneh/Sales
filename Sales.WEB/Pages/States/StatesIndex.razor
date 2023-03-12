@@ -2,6 +2,7 @@
 @inject IRepository repository;
 @inject SweetAlertService sweetAlertService
 @inject NavigationManager navigationManager
+@attribute [Authorize(Roles = "Admin")];
 
 <h3>Estados</h3>
 <a class="btn btn-primary mb-3" href="/countries/create">Nuevo Estado</a>

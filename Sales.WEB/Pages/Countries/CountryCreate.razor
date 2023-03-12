@@ -1,7 +1,8 @@
 ﻿@page "/countries/create"
 @inject IRepository repository;
 @inject NavigationManager navigationManager;
-@inject SweetAlertService sweetAlertService; 
+@inject SweetAlertService sweetAlertService;
+@attribute [Authorize(Roles = "Admin")];
 <h3>Crear País</h3>
 
 <CountryForm @ref="countryForm" Country="country" OnValidSubmit="Create" ReturnAction="Return"></CountryForm>
