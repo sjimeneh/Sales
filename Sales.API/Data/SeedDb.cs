@@ -24,7 +24,7 @@ namespace Sales.API.Data
         {
             //Este método me hace el update a la base de Datos
             await _context.Database.EnsureCreatedAsync();
-            await CheckCountriesAsync();
+            //await CheckCountriesAsync();
             await CheckCategoriesAsync();
             await CheckRolesAsync();
             await CheckUserAsync("1010", "Samuel", "Samuel", "samu@yopmail.com", "322 311 4620", "Calle Luna Calle Sol", UserType.Admin);
@@ -88,82 +88,6 @@ namespace Sales.API.Data
             //El método Any devuelve True si por lo menos hay 1 registros
             if (!_context.Countries.Any())
             {
-                //    _context.Countries.Add(new Country
-                //    {
-                //        Name = "Colombia",
-                //        States = new List<State>
-                //        {
-                //            new State {
-                //                Name="Antioquia",
-                //                Cities = new List<City>{
-                //                   new City{Name="Medellin"},
-                //                   new City{Name="Bello"},
-                //                   new City{Name="Envigado"},
-                //                   new City{Name="Itagui"},
-                //                }
-                //            },
-                //            new State {
-                //                Name="Cundinamarca",
-                //                Cities = new List<City>{
-                //                    new City { Name="Bogota"},
-                //                    new City { Name="Soacha"},
-                //                    new City { Name="Girardot"},
-                //                    new City { Name="Pacho"}
-                //                }
-                //            },
-                //            new State {
-                //                Name="Choco",
-                //                Cities = new List < City > {
-                //                    new City { Name = "Ancandí" },
-                //                    new City { Name = "Condoto" },
-                //                    new City { Name = "Lloro" },
-                //                    new City { Name = "Sipi" }
-                //                }},
-                //            new State {Name="Huila"},
-                //            new State {Name="Norte de Santander"}
-                //        }
-                //    });
-
-                //    _context.Countries.Add(new Country
-                //    {
-                //        Name = "Estados Unidos",
-                //        States = new List<State>()
-                //        {
-                //    new State()
-                //    {
-                //        Name = "Florida",
-                //        Cities = new List<City>() {
-                //            new City() { Name = "Orlando" },
-                //            new City() { Name = "Miami" },
-                //            new City() { Name = "Tampa" },
-                //            new City() { Name = "Fort Lauderdale" },
-                //            new City() { Name = "Key West" },
-                //        }
-                //    },
-                //    new State()
-                //    {
-                //        Name = "Texas",
-                //        Cities = new List<City>() {
-                //            new City() { Name = "Houston" },
-                //            new City() { Name = "San Antonio" },
-                //            new City() { Name = "Dallas" },
-                //            new City() { Name = "Austin" },
-                //            new City() { Name = "El Paso" },
-                //        }
-                //    },
-                //    });
-
-
-
-
-                //    _context.Countries.Add(new Country { Name = "Venezuela" });
-                //    _context.Countries.Add(new Country { Name = "Ecuador" });
-                //    _context.Countries.Add(new Country { Name = "Brazil" });
-                //    _context.Countries.Add(new Country { Name = "Mexico" });
-
-                //    await _context.SaveChangesAsync();
-
-
                 //Consumo de API
                 Response responseCountries = await _apiService.GetListAsync<CountryResponse>("/v1", "/countries");
                 if (responseCountries.IsSuccess)
@@ -217,7 +141,7 @@ namespace Sales.API.Data
                         }
                     }
                 }
-            }
+            }//end if
 
         }
 

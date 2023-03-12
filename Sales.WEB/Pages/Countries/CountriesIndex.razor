@@ -79,7 +79,7 @@
     //Cuando la página se recarga hay una propiedad que se ejecuta y esa es:
     protected override async Task OnInitializedAsync()
     {
-       await LoadAsync();
+        await LoadAsync();
 
     }
 
@@ -105,10 +105,18 @@
         }
 
 
-        var responseHttp = await repository.Get<List<Country>>(url1);
-        var responseHttp2 = await repository.Get<int>(url2);
-        Countries = responseHttp.Response!;
-        totalPages = responseHttp2.Response!;
+        try
+        {
+            var responseHttp = await repository.Get<List<Country>>(url1);
+            var responseHttp2 = await repository.Get<int>(url2);
+            Countries = responseHttp.Response!;
+            totalPages = responseHttp2.Response!;
+        }
+        catch (Exception ex)
+        {
+            await sweetAlertService.FireAsync("Error", ex.Message, SweetAlertIcon.Error);
+
+        }
 
     }
 
