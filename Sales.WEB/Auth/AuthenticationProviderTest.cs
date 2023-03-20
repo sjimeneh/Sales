@@ -14,7 +14,7 @@ namespace Sales.WEB.Auth
                 new Claim("FirstName", "Juan"),
                 new Claim("LastName", "Zulu"),
                 new Claim(ClaimTypes.Name, "zulu@yopmail.com"),
-                new Claim(ClaimTypes.Role, "Admin")
+                new Claim(ClaimTypes.Role, "Admin"),
 
             },
             authenticationType: "test");
