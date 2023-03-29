@@ -7,7 +7,8 @@
 
 <div class="mb-2" style="display: flex; flex-wrap:wrap; align-items: center;">
     <div>
-        <a class="btn btn-primary mb-3" href="/category/create">Nueva Categoría</a>
+        @*<a class="btn btn-primary mb-3" href="/category/create">Nueva Categoría</a>*@
+        <a class="btn btn-primary mb-3" @onclick=@(() => ShowModal())>Nueva Categoría</a>
     </div>
     <div class="mx-2">
         <input style="width: 400px;" type="text" class="form-control" id="titulo" placeholder="Buscar Categoría..." @bind-value="Filter" />
@@ -22,7 +23,7 @@
 
 <Pagination CurrentPage="currentPage"
             TotalPages="totalPages"
-            SelectedPage="SelectedPageAync"/>
+            SelectedPage="SelectedPageAync" />
 
 
 
@@ -43,7 +44,8 @@
                 {
                     <tr>
                         <td>
-                            <a class="btn btn-warning" href="/categories/edit/@category.Id">Editar</a>
+                            @*<a class="btn btn-warning" href="/categories/edit/@category.Id">Editar</a>*@
+                            <a class="btn btn-warning" @onclick=@(() => ShowModal(category.Id, true))>Editar</a>
                             <button class="btn btn-danger" @onclick=@(()=>DeleteAsync(category.Id))>Borrar</button>
                         </td>
                         <td>
@@ -69,6 +71,29 @@
     [Parameter]
     [SupplyParameterFromQuery]
     public string Filter { get; set; } = String.Empty;
+
+    [CascadingParameter]
+    IModalService Modal { get; set; } = default!;
+
+    private async Task ShowModal(int id = 0, bool isEdit = false)
+    {
+        IModalReference modalReference;
+
+        if (isEdit)
+        {
+            modalReference = Modal.Show<CategoryEdit>(string.Empty, new ModalParameters().Add("Id", id));
+        }
+        else
+        {
+            modalReference = Modal.Show<CategoryCreate>();
+        }
+
+        var result = await modalReference.Result;
+        if (result.Confirmed)
+        {
+            await LoadAsync();
+        }
+    }
 
 
 
