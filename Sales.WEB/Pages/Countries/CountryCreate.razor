@@ -10,6 +10,10 @@
     private Country country = new();
     private CountryForm? countryForm;
 
+    [CascadingParameter]
+    BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+
 
     private async Task Create()
     {
@@ -20,6 +24,7 @@
             await sweetAlertService.FireAsync("Error", message,SweetAlertIcon.Error);
             return;
         }
+        await BlazoredModal.CloseAsync(ModalResult.Ok());
         Return();
     }
 

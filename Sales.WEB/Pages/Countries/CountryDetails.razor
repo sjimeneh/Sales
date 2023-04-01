@@ -15,7 +15,9 @@ else
         <div class="card-header">
             <span>
                 <i class="oi oi-globe"></i> @country.Name
-                <a class="btn btn-sm btn-primary float-end" href="/states/create/@country.Id"><i class="oi oi-plus"></i>Nuevo Estado/Departamento</a>
+                @*<a class="btn btn-sm btn-primary float-end" href="/states/create/@country.Id"><i class="oi oi-plus"></i>Nuevo Estado/Departamento</a>*@
+                <a class="btn btn-sm btn-primary float-end" @onclick=@(() => ShowModal())><i class="oi oi-plus"></i>Nuevo Estado/Departamento</a>
+                
                 <a class="btn btn-sm btn-success float-end mx-3" href="/countries"><i class="oi oi-arrow-thick-left"></i>Regresar
                 </a>
 
@@ -60,7 +62,9 @@ else
                                     </td>
                                     <td>
                                         <a href="/states/details/@state.Id" class="btn btn-info btn-sm"><i class="oi oi-list" /> Detalles</a>
-                                        <a href="/states/edit/@state.Id" class="btn btn-warning btn-sm"><i class="oi oi-pencil" /> Editar</a>
+                                        @*<a href="/states/edit/@state.Id" class="btn btn-warning btn-sm"><i class="oi oi-pencil" /> Editar</a>*@
+                                        <a @onclick=@(() => ShowModal(state.Id, true)) class="btn btn-warning btn-sm"><i class="oi oi-pencil" /> Editar</a>
+                                        
                                         <button class="btn btn-danger btn-sm" @onclick=@(() => DeleteAsync(state.Id))><i class="oi oi-trash" /> Borrar</button>
                                     </td>
                                 </tr>
@@ -79,6 +83,9 @@ else
     private int currentPage = 1;
     private int totalPages;
 
+    [CascadingParameter]
+    IModalService Modal { get; set; } = default!;
+
 
     [Parameter]
     public int Id { get; set; }
@@ -90,6 +97,27 @@ else
     [Parameter]
     [SupplyParameterFromQuery]
     public string Filter { get; set; } = String.Empty;
+
+
+    private async Task ShowModal(int id = 0, bool isEdit = false)
+    {
+        IModalReference modalReference;
+
+        if (isEdit)
+        {
+            modalReference = Modal.Show<States.StateEdit>(string.Empty, new ModalParameters().Add("StateId", id));
+        }
+        else
+        {
+            modalReference = Modal.Show<States.StateCreate>(string.Empty, new ModalParameters().Add("CountryId",country!.Id));
+        }
+
+        var result = await modalReference.Result;
+        if (result.Confirmed)
+        {
+            await LoadAsync();
+        }
+    }
 
 
     protected override async Task OnInitializedAsync()

@@ -12,6 +12,10 @@
     [Parameter]
     public int CountryId { get; set; }
 
+    [CascadingParameter]
+    BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+
 
     private async Task Create()
     {
@@ -24,6 +28,7 @@
             return;
         }
         Return();
+        await BlazoredModal.CloseAsync(ModalResult.Ok());
     }
 
     private void Return()

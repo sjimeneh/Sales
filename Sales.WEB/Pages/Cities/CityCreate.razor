@@ -3,6 +3,8 @@
 @inject NavigationManager navigationManager;
 @inject SweetAlertService sweetAlertService;
 @attribute [Authorize(Roles = "Admin")];
+
+
 <h3>Crear Ciudad</h3>
 
 <CityForm @ref="cityForm" city="city" OnValidSubmit="Create" ReturnAction="Return"></CityForm>
@@ -11,6 +13,10 @@
     private CityForm? cityForm;
     [Parameter]
     public int StateId { get; set; }
+
+    [CascadingParameter]
+    BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
 
 
     private async Task Create()
@@ -23,6 +29,7 @@
             await sweetAlertService.FireAsync("Error", message, SweetAlertIcon.Error);
             return;
         }
+        await BlazoredModal.CloseAsync(ModalResult.Ok());
         Return();
     }
 

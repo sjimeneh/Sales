@@ -72,6 +72,8 @@
     [SupplyParameterFromQuery]
     public string Filter { get; set; } = String.Empty;
 
+    #region Codigo Ventana Modal
+
     [CascadingParameter]
     IModalService Modal { get; set; } = default!;
 
@@ -95,6 +97,7 @@
         }
     }
 
+    #endregion
 
 
     //Cuando la página se recarga hay una propiedad que se ejecuta y esa es:
@@ -171,6 +174,7 @@
                     return;
                 }
             }
+
             await LoadAsync();
 
         }

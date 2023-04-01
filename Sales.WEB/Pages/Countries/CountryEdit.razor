@@ -18,6 +18,10 @@
     [Parameter]
     public int Id { get; set; }
 
+    [CascadingParameter]
+    BlazoredModalInstance BlazoredModal { get; set; } = default!;
+
+
     protected override async Task OnInitializedAsync()
     {
         var responseHttp = await repository.Get<Country>($"/api/countries/{Id}");
@@ -44,6 +48,7 @@
             await sweetAlertService.FireAsync("Errror", message, SweetAlertIcon.Error);
             return;
         }
+        await BlazoredModal.CloseAsync(ModalResult.Ok());
         Return();
     }
 
