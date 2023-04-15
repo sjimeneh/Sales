@@ -24,6 +24,7 @@ namespace Sales.API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult> Get([FromQuery] PaginationDTO pagination)
         {
             var queryable = _context.Products
@@ -44,6 +45,7 @@ namespace Sales.API.Controllers
 
 
         [HttpGet("totalPages")]
+        [AllowAnonymous]
         public async Task<ActionResult> GetPages([FromQuery] PaginationDTO pagination)
         {
             var queryable = _context.Products
