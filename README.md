@@ -10,14 +10,19 @@ El proyecto SALES es una aplicación distribuida que está diseñada para ser ut
 
 - .NET 7
 - Blazor
-- [Otras tecnologías utilizadas]
+- MAUI
+- SQL SERVER
+- AZURE
+- POO
+- DTO
+- DRY
 
 ## Inicio Rápido
 
 Siga estos pasos para comenzar con el proyecto SALES:
 
 1. Clona este repositorio.
-2. [Instrucciones adicionales de configuración, si es necesario]
+2. Pendiente por establecer.
 3. Ejecuta la aplicación.
 
 ## Contribución
